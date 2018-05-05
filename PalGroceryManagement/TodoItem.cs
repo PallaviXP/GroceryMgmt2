@@ -25,7 +25,7 @@ namespace PalGroceryManagement
         }
 
         [JsonProperty(PropertyName = "weight")]
-        public decimal Weight
+        public decimal Weight //
         {
             get; set;
         }
