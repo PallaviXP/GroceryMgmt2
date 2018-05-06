@@ -13,6 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroceryServices", "Backend\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Document", "Document", "{76B0B681-FD19-4EDA-A566-43E164F7257B}"
 	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		Bash_Commands_To_Create_CosmosDB_With_SQLAPI.txt = Bash_Commands_To_Create_CosmosDB_With_SQLAPI.txt
 		Plan for POC.xlsx = Plan for POC.xlsx
 	EndProjectSection
 EndProject
