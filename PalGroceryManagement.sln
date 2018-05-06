@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalGroceryManagement.Droid"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{C06EC663-D067-4878-9042-10627D3B5FAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroceryServices", "Backend\GroceryServices\GroceryServices.csproj", "{DC3D03B0-FEE8-4F3F-9781-01276319775C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroceryServices", "Backend\GroceryServices\GroceryServices.csproj", "{DC3D03B0-FEE8-4F3F-9781-01276319775C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
