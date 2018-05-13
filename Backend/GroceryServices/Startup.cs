@@ -9,6 +9,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+//swagger specific namespaces
+//nuget package is NSwag.AspNetCore
+using NJsonSchema;
+using NSwag.AspNetCore;
+using System.Reflection;
+
 namespace GroceryServices
 {
     public class Startup
@@ -33,6 +39,14 @@ namespace GroceryServices
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //swagger specific code block
+            // Enable the Swagger UI middleware and the Swagger generator
+            app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, settings =>
+            {
+                settings.GeneratorSettings.DefaultPropertyNameHandling =
+                    PropertyNameHandling.CamelCase;
+            });
 
             app.UseMvc();
         }

@@ -9,7 +9,7 @@ namespace PalGroceryManagement
 		public App ()
 		{
 			// The root page of your application
-			MainPage = new TodoList();
+			MainPage = new GroceryList();
 		}
 
 		protected override void OnStart ()

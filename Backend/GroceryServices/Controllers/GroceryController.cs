@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GroceryServices.Service;
 using GroceryServices.Types;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,22 +13,19 @@ namespace GroceryServices.Controllers
     [Route("api/Grocery")]
     public class GroceryController : Controller
     {
-
+        IGroceryService _groceryService;
         List<Grocery> _groceryList;
 
         public GroceryController()
         {
-            _groceryList = new List<Grocery>() {
-                new Grocery() { Id = 1, Name = "Jaggery", Quantity = 0, Weight = 1 },
-                new Grocery() { Id = 2, Name = "Wheat", Quantity = 0, Weight = 5 },
-                new Grocery() { Id = 3, Name = "Salt", Quantity = 0, Weight = 2 },
-            };
+            _groceryService = new GroceryService();           
         }
 
         // GET: api/Grocery
         [HttpGet]
-        public IEnumerable<Grocery> Get()
-        {          
+        public async Task<IEnumerable<Grocery>> Get()
+        {     
+            _groceryList = await _groceryService.GetAllPendingGroceryList();
             return _groceryList;
         }
 

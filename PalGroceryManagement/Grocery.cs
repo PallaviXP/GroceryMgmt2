@@ -1,14 +1,7 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace GroceryServices.Types
+namespace PalGroceryManagement
 {
-    /// <summary>
-    /// { "id": "1", "category": "Grocery", "name": "wheat", "description": "for roti", "quantity":"1","specification":"kg","isComplete": false }
-    /// </summary>
     public class Grocery
     {
         [JsonProperty(PropertyName = "id")]
@@ -33,3 +26,4 @@ namespace GroceryServices.Types
         public bool IsComplete { get; set; }
     }
 }
+

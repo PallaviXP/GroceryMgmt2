@@ -4,15 +4,15 @@ using Xamarin.Forms;
 
 namespace PalGroceryManagement
 {
-    public partial class TodoList : ContentPage
+    public partial class GroceryList : ContentPage
     {
-        TodoItemManager manager;
+        GroceryManager manager;
 
-        public TodoList()
+        public GroceryList()
         {
             InitializeComponent();
 
-            manager = TodoItemManager.DefaultManager;
+            manager = GroceryManager.DefaultManager;
 
             // OnPlatform<T> doesn't currently support the "Windows" target platform, so we have this check here.
             if (manager.IsOfflineEnabled && Device.OS == TargetPlatform.Windows)
@@ -37,22 +37,22 @@ namespace PalGroceryManagement
         }
 
         // Data methods
-        async Task AddItem(TodoItem item)
+        async Task AddItem(Grocery item)
         {
             await manager.SaveTaskAsync(item);
-            todoList.ItemsSource = await manager.GetTodoItemsAsync();
+            todoList.ItemsSource = await manager.GetGrocerysAsync();
         }
 
-        async Task CompleteItem(TodoItem item)
+        async Task CompleteItem(Grocery item)
         {
-            item.Done = true;
+            item.IsComplete = true;
             await manager.SaveTaskAsync(item);
-            todoList.ItemsSource = await manager.GetTodoItemsAsync();
+            todoList.ItemsSource = await manager.GetGrocerysAsync();
         }
 
         public async void OnAdd(object sender, EventArgs e)
         {
-            var todo = new TodoItem { Name = newItemName.Text };
+            var todo = new Grocery { Name = newItemName.Text };
             await AddItem(todo);
 
             newItemName.Text = string.Empty;
@@ -62,20 +62,20 @@ namespace PalGroceryManagement
         // Event handlers
         public async void OnSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var todo = e.SelectedItem as TodoItem;
-            if (Device.OS != TargetPlatform.iOS && todo != null)
+            var groc = e.SelectedItem as Grocery;
+            if (Device.OS != TargetPlatform.iOS && groc != null)
             {
                 // Not iOS - the swipe-to-delete is discoverable there
                 if (Device.OS == TargetPlatform.Android)
                 {
-                    await DisplayAlert(todo.Name, "Press-and-hold to complete task " + todo.Name, "Got it!");
+                    await DisplayAlert(groc.Name, "Press-and-hold to complete task " + groc.Name, "Got it!");
                 }
                 else
                 {
                     // Windows, not all platforms support the Context Actions yet
-                    if (await DisplayAlert("Mark completed?", "Do you wish to complete " + todo.Name + "?", "Complete", "Cancel"))
+                    if (await DisplayAlert("Mark completed?", "Do you wish to complete " + groc.Name + "?", "Complete", "Cancel"))
                     {
-                        await CompleteItem(todo);
+                        await CompleteItem(groc);
                     }
                 }
             }
@@ -88,7 +88,7 @@ namespace PalGroceryManagement
         public async void OnComplete(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);
-            var todo = mi.CommandParameter as TodoItem;
+            var todo = mi.CommandParameter as Grocery;
             await CompleteItem(todo);
         }
 
@@ -125,7 +125,7 @@ namespace PalGroceryManagement
         {
             using (var scope = new ActivityIndicatorScope(syncIndicator, showActivityIndicator))
             {
-                todoList.ItemsSource = await manager.GetTodoItemsAsync(syncItems);
+                todoList.ItemsSource = await manager.GetGrocerysAsync(syncItems);
             }
         }
 
