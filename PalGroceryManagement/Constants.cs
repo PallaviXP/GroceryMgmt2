@@ -4,8 +4,8 @@ namespace PalGroceryManagement
 {
 	public static class Constants
 	{
-		// Replace strings with your Azure Mobile App endpoint.
-		public static string ApplicationURL = @"https://palgrocerymanagement1.azurewebsites.net";
+        public const string BaseUrl = "https://groceryservices.azurewebsites.net/api/";
+        public const string GroceryListURL = "grocery/";
 	}
 }
 

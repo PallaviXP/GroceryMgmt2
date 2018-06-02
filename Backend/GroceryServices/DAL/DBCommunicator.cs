@@ -125,8 +125,5 @@ namespace GroceryServices.DAL
         {
             await _client.DeleteDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id));
         }
-
-
-
     }
 }

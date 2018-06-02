@@ -6,26 +6,15 @@ namespace PalGroceryManagement
 {
     public partial class GroceryList : ContentPage
     {
-        GroceryManager manager;
+        GroceryManager _manager;
 
         public GroceryList()
         {
             InitializeComponent();
 
-            manager = GroceryManager.DefaultManager;
+            _manager = new GroceryManager();
 
-            // OnPlatform<T> doesn't currently support the "Windows" target platform, so we have this check here.
-            if (manager.IsOfflineEnabled && Device.OS == TargetPlatform.Windows)
-            {
-                var syncButton = new Button
-                {
-                    Text = "Sync items",
-                    HeightRequest = 30
-                };
-                syncButton.Clicked += OnSyncItems;
-
-                buttonsPanel.Children.Add(syncButton);
-            }
+           
         }
 
         protected override async void OnAppearing()
@@ -33,21 +22,21 @@ namespace PalGroceryManagement
             base.OnAppearing();
 
             // Set syncItems to true in order to synchronize the data on startup when running in offline mode
-            await RefreshItems(true, syncItems: true);
+            await RefreshItems(true);
         }
 
         // Data methods
         async Task AddItem(Grocery item)
         {
-            await manager.SaveTaskAsync(item);
-            todoList.ItemsSource = await manager.GetGrocerysAsync();
+            await _manager.SaveTaskAsync(item);
+            groceryList.ItemsSource = await _manager.GetGrocerysAsync();
         }
 
         async Task CompleteItem(Grocery item)
         {
             item.IsComplete = true;
-            await manager.SaveTaskAsync(item);
-            todoList.ItemsSource = await manager.GetGrocerysAsync();
+            await _manager.SaveTaskAsync(item);
+            groceryList.ItemsSource = await _manager.GetGrocerysAsync();
         }
 
         public async void OnAdd(object sender, EventArgs e)
@@ -81,7 +70,7 @@ namespace PalGroceryManagement
             }
 
             // prevents background getting highlighted
-            todoList.SelectedItem = null;
+            groceryList.SelectedItem = null;
         }
 
         // http://developer.xamarin.com/guides/cross-platform/xamarin-forms/working-with/listview/#context
@@ -99,7 +88,7 @@ namespace PalGroceryManagement
             Exception error = null;
             try
             {
-                await RefreshItems(false, true);
+                await RefreshItems(false);
             }
             catch (Exception ex)
             {
@@ -118,14 +107,14 @@ namespace PalGroceryManagement
 
         public async void OnSyncItems(object sender, EventArgs e)
         {
-            await RefreshItems(true, true);
+            await RefreshItems(true);
         }
 
-        private async Task RefreshItems(bool showActivityIndicator, bool syncItems)
+        private async Task RefreshItems(bool showActivityIndicator)
         {
             using (var scope = new ActivityIndicatorScope(syncIndicator, showActivityIndicator))
             {
-                todoList.ItemsSource = await manager.GetGrocerysAsync(syncItems);
+                groceryList.ItemsSource = await _manager.GetGrocerysAsync();
             }
         }
 

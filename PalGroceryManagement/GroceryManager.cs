@@ -4,55 +4,37 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
-
+using PalGroceryManagement.HttpCommunication;
+using System.Net;
+using Newtonsoft.Json;
 
 namespace PalGroceryManagement
 {
     public partial class GroceryManager
     {
         static GroceryManager _defaultInstance = new GroceryManager();
-        MobileServiceClient _client;
-        IMobileServiceTable<Grocery> _groceryTable;
         const string offlineDbPath = @"localstore.db";
+        HttpCommunicator _communicator;
 
-        private GroceryManager()
+        public GroceryManager()
         {
-            this._client = new MobileServiceClient(Constants.ApplicationURL);
-            this._groceryTable = _client.GetTable<Grocery>();
+            _communicator = new HttpCommunicator();
         }
-
-        public static GroceryManager DefaultManager
-        {
-            get
-            {
-                return _defaultInstance;
-            }
-            private set
-            {
-                _defaultInstance = value;
-            }
-        }
-
-        public MobileServiceClient CurrentClient
-        {
-            get { return _client; }
-        }
-
-        public bool IsOfflineEnabled
-        {
-            get { return _groceryTable is Microsoft.WindowsAzure.MobileServices.Sync.IMobileServiceSyncTable<Grocery>; }
-        }
-
-        public async Task<ObservableCollection<Grocery>> GetGrocerysAsync(bool syncItems = false)
+                            
+        public async Task<List<Grocery>> GetGrocerysAsync()
         {
             try
             {
+                var response = await _communicator.GetAsync(Constants.GroceryListURL);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    var jsonString = await response.Content.ReadAsStringAsync();
+                    var deserilizedObj = JsonConvert.DeserializeObject<List<Grocery>>(jsonString);
+                    return deserilizedObj;
+                }
+                else
+                    return null;
 
-                IEnumerable<Grocery> items = await _groceryTable
-                    .Where(todoItem => !todoItem.IsComplete)
-                    .ToEnumerableAsync();
-
-                return new ObservableCollection<Grocery>(items);
             }
             catch (MobileServiceInvalidOperationException msioe)
             {
@@ -67,14 +49,7 @@ namespace PalGroceryManagement
 
         public async Task SaveTaskAsync(Grocery item)
         {
-            if (item.Id == null)
-            {
-                await _groceryTable.InsertAsync(item);
-            }
-            else
-            {
-                await _groceryTable.UpdateAsync(item);
-            }
+           
         }
         
     }

@@ -30,7 +30,7 @@
         </StackLayout>
       </Grid>
     </StackLayout>
-    <ListView x:Name="todoList"
+    <ListView x:Name="groceryList"
 				ItemSelected="OnSelected"
 				IsPullToRefreshEnabled="true" Refreshing="OnRefresh"
 				Grid.Row="1">

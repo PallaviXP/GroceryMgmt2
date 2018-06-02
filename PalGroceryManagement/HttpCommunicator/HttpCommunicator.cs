@@ -1,27 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
 
-namespace PalGroceryManagement.HttpCommunicator
+namespace PalGroceryManagement.HttpCommunication
 {
     public class HttpCommunicator
     {
-
-        private const string BaseUrl = "";
+        private const int Timeout = 30000; //millisec
 
         public async Task<HttpResponseMessage> GetAsync(string url)
         {
+            HttpResponseMessage response = null;
             using (var client = new HttpClient())
-            {              
-                var address = string.Format("{0}{1}", BaseUrl, url);
-                return await client.GetAsync(address);
+            {
+                client.Timeout = TimeSpan.FromMilliseconds(Timeout);
+                var address = string.Format("{0}{1}", Constants.BaseUrl, url);
+                response =  await client.GetAsync(address);
             }
+            return response;
         }
 
         public async Task<HttpResponseMessage> PostAsync<T>(string url, T data)
@@ -30,7 +28,7 @@ namespace PalGroceryManagement.HttpCommunicator
             HttpResponseMessage response = null;
             using (var client = new HttpClient())
             {                
-                var address = string.Format("{0}{1}", BaseUrl, url);
+                var address = string.Format("{0}{1}", Constants.BaseUrl, url);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 response = await client.PostAsync(address, content);
             }
@@ -44,11 +42,23 @@ namespace PalGroceryManagement.HttpCommunicator
             HttpResponseMessage response = null;
             using (var client = new HttpClient())
             {
-                var address = string.Format("{0}{1}", BaseUrl, url);
+                var address = string.Format("{0}{1}", Constants.BaseUrl, url);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 response = await client.PutAsync(address, content);
             }
             return response;
         }
+
+        public async Task<HttpResponseMessage> DeleteAsync<T>(string url, string id)
+        {
+            HttpResponseMessage response = null;
+            using (var client = new HttpClient())
+            {
+                var address = string.Format("{0}{1}", Constants.BaseUrl, url);
+                response = await client.DeleteAsync(new Uri("{Constant.BaseUrl}{id}"));
+            }
+            return response;
+        }
+
     }
 }
