@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Document", "Document", "{76
 		.gitignore = .gitignore
 		Bash_Commands_To_Create_CosmosDB_With_SQLAPI.txt = Bash_Commands_To_Create_CosmosDB_With_SQLAPI.txt
 		Plan for POC.xlsx = Plan for POC.xlsx
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global
