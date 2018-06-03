@@ -8,8 +8,8 @@ namespace PalGroceryManagement
 	{
 		public App ()
 		{
-			// The root page of your application
-			MainPage = new GroceryList();
+            // The root page of your application
+            MainPage = new MainPage();         //new GroceryList();
 		}
 
 		protected override void OnStart ()

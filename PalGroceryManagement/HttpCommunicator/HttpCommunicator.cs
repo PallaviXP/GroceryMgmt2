@@ -27,7 +27,8 @@ namespace PalGroceryManagement.HttpCommunication
             var json = JsonConvert.SerializeObject(data);
             HttpResponseMessage response = null;
             using (var client = new HttpClient())
-            {                
+            {
+                client.Timeout = TimeSpan.FromMilliseconds(Timeout);
                 var address = string.Format("{0}{1}", Constants.BaseUrl, url);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 response = await client.PostAsync(address, content);
