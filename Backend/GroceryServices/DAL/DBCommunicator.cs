@@ -122,7 +122,7 @@ namespace GroceryServices.DAL
             return await _client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id), item);
         }
 
-        public static async Task DeleteItemAsync(string id, string category)
+        public static async Task DeleteItemAsync(string id)
         {
             await _client.DeleteDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id));
         }

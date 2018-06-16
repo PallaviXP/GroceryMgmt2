@@ -56,14 +56,27 @@ namespace GroceryServices.Controllers
         
         // PUT: api/Grocery/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<IActionResult> Put(string id, [FromBody]Grocery item)
         {
+            if (item == null)
+            {
+                return BadRequest();
+            }
+            var groceryItem = await _groceryService.Find(id);
+            if (groceryItem == null)
+            {
+                return NotFound();
+            }
+            await _groceryService.Update(item);
+            return NoContent();
         }
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
+            await _groceryService.DeleteGroceryItem(id);
+            return NoContent();
         }
     }
 }

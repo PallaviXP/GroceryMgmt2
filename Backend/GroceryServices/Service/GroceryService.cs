@@ -31,5 +31,27 @@ namespace GroceryServices.Service
             return result.Id;
            
         }
+
+        public async Task DeleteGroceryItem(string id)
+        {
+            await DBCommunicator<Grocery>.DeleteItemAsync(id);
+        }
+
+        public async Task Update(Grocery item)
+        {
+            var res = await DBCommunicator<Grocery>.GetItemsCollection(x => x.Id == item.Id);
+            var itemToUpdate = res?.SingleOrDefault();
+
+            if (itemToUpdate != null)
+            {
+                itemToUpdate.IsComplete = item.IsComplete;
+                itemToUpdate.Name = item.Name;
+                itemToUpdate.Quantity = item.Quantity;
+                itemToUpdate.Specification = item.Specification;
+                itemToUpdate.Description = item.Description;
+                itemToUpdate.Category = item.Category;
+                await DBCommunicator<Grocery>.UpdateItemAsync(item.Id, itemToUpdate);
+            }
+        }
     }
 }

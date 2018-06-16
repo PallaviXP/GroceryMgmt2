@@ -1,8 +1,6 @@
-﻿using System;
+﻿using GroceryServices.Types;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using GroceryServices.Types;
 
 namespace GroceryServices.Service
 {
@@ -11,5 +9,8 @@ namespace GroceryServices.Service
         Task<List<Grocery>> GetAllPendingGroceryList();
         Task<string> SaveGroceryItem(Grocery item);
         Task<Grocery> Find(string id);
+
+        Task DeleteGroceryItem(string id);
+        Task Update(Grocery item);
     }
 }
