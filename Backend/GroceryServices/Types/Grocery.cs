@@ -1,8 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GroceryServices.Types
 {
@@ -12,7 +8,7 @@ namespace GroceryServices.Types
     public class Grocery
     {
         [JsonProperty(PropertyName = "id")]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty(PropertyName = "category")]
         public string Category { get; set; }

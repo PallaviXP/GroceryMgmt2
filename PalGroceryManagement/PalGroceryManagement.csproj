@@ -33,6 +33,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="HttpCommunicator\HttpCommunicator.cs" />
+    <Compile Include="Xaml\AddEditGrocery.xaml.cs">
+      <DependentUpon>AddEditGrocery.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Xaml\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -77,6 +80,13 @@
     <EmbeddedResource Include="Xaml\MainPageDetail.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Xaml\AddEditGrocery.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>
+      </SubType>
     </EmbeddedResource>
   </ItemGroup>
 </Project>

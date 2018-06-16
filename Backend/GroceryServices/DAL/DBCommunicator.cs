@@ -114,6 +114,7 @@ namespace GroceryServices.DAL
         public static async Task<Document> CreateItemAsync(T item)
         {
             return await _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId), item);
+
         }
 
         public static async Task<Document> UpdateItemAsync(string id, T item)

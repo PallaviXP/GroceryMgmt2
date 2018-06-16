@@ -20,23 +20,38 @@ namespace GroceryServices.Controllers
 
         // GET: api/Grocery
         [HttpGet]
-        public async Task<IEnumerable<Grocery>> Get()
-        {     
-            _groceryList = await _groceryService.GetAllPendingGroceryList();
-            return _groceryList;
+        public async Task<IActionResult> Get()
+        {
+            var groceryList = await _groceryService.GetAllPendingGroceryList();
+            return Ok(groceryList);
         }
 
         // GET: api/Grocery/5
         [HttpGet("{id}", Name = "Get")]
-        public Grocery Get(int id)
+        public async Task<IActionResult> Get(string id)
         {
-            return _groceryList[id-1];
+            var item = await _groceryService.Find(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return Ok(item);
         }
         
         // POST: api/Grocery
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<IActionResult> CreateGroceryEntry([FromBody]Grocery item)
         {
+            if (item == null)
+            {
+                return BadRequest();
+            }
+            //Grocery item1 = new Grocery() { Id="4", Name = "OldRice", Category = "Random Need", IsComplete = false, Quantity = "0", Specification = "Nothing" };
+            var resultId = await _groceryService.SaveGroceryItem(item);
+            return CreatedAtRoute(
+                routeName: "Get",
+                routeValues: new { id = resultId },
+                value: item);
         }
         
         // PUT: api/Grocery/5

@@ -4,11 +4,11 @@ using Xamarin.Forms;
 
 namespace PalGroceryManagement
 {
-    public partial class GroceryList : ContentPage
+    public partial class AddEditGrocery : ContentPage
     {
         GroceryManager _manager;
 
-        public GroceryList()
+        public AddEditGrocery()
         {
             InitializeComponent();
 
@@ -24,14 +24,29 @@ namespace PalGroceryManagement
             // Set syncItems to true in order to synchronize the data on startup when running in offline mode
             await RefreshItems(true);
         }
-      
+
+        // Data methods
+        async Task AddItem(Grocery item)
+        {
+            await _manager.SaveTaskAsync(item);
+            groceryList.ItemsSource = await _manager.GetGrocerysAsync();
+        }
+
         async Task CompleteItem(Grocery item)
         {
             item.IsComplete = true;
             await _manager.SaveTaskAsync(item);
             groceryList.ItemsSource = await _manager.GetGrocerysAsync();
         }
-            
+
+        public async void OnAdd(object sender, EventArgs e)
+        {
+            var todo = new Grocery { Name = newItemName.Text };
+            await AddItem(todo);
+
+            newItemName.Text = string.Empty;
+            newItemName.Unfocus();
+        }
 
         // Event handlers
         public async void OnSelected(object sender, SelectedItemChangedEventArgs e)
