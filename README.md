@@ -1,4 +1,4 @@
-## Grocery Management Application
+﻿## Grocery Management Application
 
 
 This application involves
@@ -20,7 +20,20 @@ Features used in Xamarin Form Mobile client App
 
 Features used in .Net Core Web API 2.0 Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-1. communication to Azure cosmos db - document db api database
+1. Communication to Azure cosmos db - document db api database
+2. Layered architecture design.
+
+​```flow
+st=>start: Start
+op=>operation: APIRequest to Controllers (e.g. update Grocery)
+op=>operation: GroceryService (Grocery Specific)	
+op=>operation: DBCommunicator<T> (Generic) - communicate to cosmos db
+e=>end: End
+​```
+	
+
+
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
