@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace GroceryServices.ActionResult
 {
+    /// <summary>
+    /// Not in use right now
+    /// </summary>
     public class TextResult : IHttpActionResult
     {
         string _value;

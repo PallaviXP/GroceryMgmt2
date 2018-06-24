@@ -11,16 +11,12 @@ namespace PalGroceryManagement
         public GroceryList()
         {
             InitializeComponent();
-
-            _manager = new GroceryManager();
-
-           
+            _manager = new GroceryManager(); //MockGroceryManager
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-
             // Set syncItems to true in order to synchronize the data on startup when running in offline mode
             await RefreshItems(true);
         }

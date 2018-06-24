@@ -8,38 +8,39 @@ namespace GroceryServices.Service
 {
     public class GroceryService : IGroceryService
     {
-        public GroceryService()
+        IDBCommunicator<Grocery> _dBCommunicator;
+
+        public GroceryService(IDBCommunicator<Grocery> dBCommunicator)
         {
-            DBCommunicator<Grocery>.Initialize();
+            _dBCommunicator = dBCommunicator;
+            _dBCommunicator.Initialize();
         }
 
         public async Task<Grocery> Find(string id)
         {
-            var res = await DBCommunicator<Grocery>.GetItemsCollection(x => x.Id == id);
+            var res = await _dBCommunicator.GetItemsCollection(x => x.Id == id);
             return res?.SingleOrDefault();
         }
 
         public async Task<List<Grocery>> GetAllPendingGroceryList()
         {
-            var res = await DBCommunicator<Grocery>.GetItemsCollection(x => !x.IsComplete);
+            var res = await _dBCommunicator.GetItemsCollection(x => !x.IsComplete);
             return res?.ToList();
         }
 
         public async Task<string> SaveGroceryItem(Grocery item)
         {
-            var result = await DBCommunicator<Grocery>.CreateItemAsync(item);
-            return result.Id;
-           
+            return await _dBCommunicator.CreateItemAsync(item);
         }
 
         public async Task DeleteGroceryItem(string id)
         {
-            await DBCommunicator<Grocery>.DeleteItemAsync(id);
+            await _dBCommunicator.DeleteItemAsync(id);
         }
 
         public async Task Update(Grocery item)
         {
-            var res = await DBCommunicator<Grocery>.GetItemsCollection(x => x.Id == item.Id);
+            var res = await _dBCommunicator.GetItemsCollection(x => x.Id == item.Id);
             var itemToUpdate = res?.SingleOrDefault();
 
             if (itemToUpdate != null)
@@ -50,7 +51,7 @@ namespace GroceryServices.Service
                 itemToUpdate.Specification = item.Specification;
                 itemToUpdate.Description = item.Description;
                 itemToUpdate.Category = item.Category;
-                await DBCommunicator<Grocery>.UpdateItemAsync(item.Id, itemToUpdate);
+                await _dBCommunicator.UpdateItemAsync(item.Id, itemToUpdate);
             }
         }
     }

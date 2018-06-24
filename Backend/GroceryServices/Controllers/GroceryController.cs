@@ -1,7 +1,6 @@
 ﻿using GroceryServices.Service;
 using GroceryServices.Types;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GroceryServices.Controllers
@@ -10,12 +9,11 @@ namespace GroceryServices.Controllers
     [Route("api/Grocery")]
     public class GroceryController : Controller
     {
-        IGroceryService _groceryService;
-        List<Grocery> _groceryList;
-
-        public GroceryController()
+        private readonly IGroceryService _groceryService;
+      
+        public GroceryController(IGroceryService groceryService)
         {
-            _groceryService = new GroceryService();           
+            _groceryService = groceryService;           
         }
 
         // GET: api/Grocery

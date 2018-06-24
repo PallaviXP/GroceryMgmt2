@@ -13,22 +13,23 @@ namespace GroceryServices.DAL
 {
     /// <summary>
     /// Azure CosmosDB - SQLAPI/Document DB API communicator
+    /// todo: can I avoid static class here? -- use IDBCommunicator in future
     /// </summary>
-    public static class DBCommunicator<T> where T : class
+    public class DBCommunicator<T> : IDBCommunicator<T> where T : class
     {
         private static readonly string DatabaseId = Keys.DatabaseId;
         private static readonly string CollectionId = Keys.CollectionId;
         private static DocumentClient _client;
 
         #region Init
-        public static void Initialize()
+        public void Initialize()
         {
             _client = new DocumentClient(new Uri(Keys.CosmosEndpointUrl), Keys.CosmosAuthKey);
             CreateDatabaseIfNotExistsAsync().Wait();
             CreateCollectionIfNotExistsAsync().Wait();
         }
 
-        private static async Task CreateDatabaseIfNotExistsAsync()
+        private async Task CreateDatabaseIfNotExistsAsync()
         {
             try
             {
@@ -47,7 +48,7 @@ namespace GroceryServices.DAL
             }
         }
 
-        private static async Task CreateCollectionIfNotExistsAsync()
+        private async Task CreateCollectionIfNotExistsAsync()
         {
             try
             {
@@ -73,7 +74,7 @@ namespace GroceryServices.DAL
         }
         #endregion
 
-        public static async Task<IEnumerable<T>> GetItemsCollection(Expression<Func<T, bool>> predicate)
+        public async Task<IEnumerable<T>> GetItemsCollection(Expression<Func<T, bool>> predicate)
         {
             IDocumentQuery<T> query = _client.CreateDocumentQuery<T>(
                 UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId),
@@ -90,7 +91,7 @@ namespace GroceryServices.DAL
             return results;
         }
 
-        public static async Task<T> GetItem(string id)
+        public async Task<T> GetItem(string id)
         {
             try
             {
@@ -111,18 +112,18 @@ namespace GroceryServices.DAL
             }
         }
 
-        public static async Task<Document> CreateItemAsync(T item)
+        public async Task<string> CreateItemAsync(T item)
         {
-            return await _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId), item);
-
+            var result = await _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId), item);
+            return result.Resource.Id;
         }
 
-        public static async Task<Document> UpdateItemAsync(string id, T item)
+        public async Task UpdateItemAsync(string id, T item)
         {
-            return await _client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id), item);
+            await _client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id), item);
         }
 
-        public static async Task DeleteItemAsync(string id)
+        public async Task DeleteItemAsync(string id)
         {
             await _client.DeleteDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id));
         }
