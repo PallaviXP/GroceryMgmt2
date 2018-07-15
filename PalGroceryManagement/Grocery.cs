@@ -5,7 +5,7 @@ namespace PalGroceryManagement
     public class Grocery
     {
         [JsonProperty(PropertyName = "id")]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty(PropertyName = "category")]
         public string Category { get; set; }

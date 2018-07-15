@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace GroceryServices.DAL
+namespace GroceryServices.DAL 
 {
     /// <summary>
     /// Azure CosmosDB - SQLAPI/Document DB API communicator

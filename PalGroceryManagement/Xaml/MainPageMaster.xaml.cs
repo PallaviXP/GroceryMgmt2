@@ -30,9 +30,7 @@ namespace PalGroceryManagement
                 {
                     new MainPageMenuItem { Id = 0, Title = "Grocery - Bring it!", TargetType = typeof(GroceryList) },
                     new MainPageMenuItem { Id = 1, Title = "Grocery - List it!", TargetType = typeof(GroceryList) },
-                    new MainPageMenuItem { Id = 2, Title = "Page 3", TargetType = typeof(MainPageDetail) },
-                    //new MainPageMenuItem { Id = 3, Title = "Page 4" },
-                    //new MainPageMenuItem { Id = 4, Title = "Page 5" },
+                    new MainPageMenuItem { Id = 2, Title = "Grocery Master", TargetType = typeof(MainPageDetail) },                   
                 });
             }
 

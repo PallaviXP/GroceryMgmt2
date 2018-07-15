@@ -24,7 +24,7 @@ namespace GroceryServices.Service
 
         public async Task<List<Grocery>> GetAllPendingGroceryList()
         {
-            var res = await _dBCommunicator.GetItemsCollection(x => !x.IsComplete);
+            var res = await _dBCommunicator.GetItemsCollection(x=> x.Name != "");
             return res?.ToList();
         }
 

@@ -16,13 +16,16 @@ Features used in .Net Core Web API 2.0 Application
 2. Used Azure CosmosDB Emulator (local , free) for development.
 3. Layered architecture design.
 4. Use of asp.net core inbuilt dependancy injection feature.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+5. Alexa skill integration - taking input from Alexa escho device.
+   Ref. link: http://www.manchesterdeveloper.com/blog/post/Creating-Alexa-Skills-with-Web-API-and-hosting-on-Microsoft-Azure
+   http://matthiasshapiro.com/2017/02/10/tutorial-alexa-skills-in-c-the-code/
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
 Features used in Xamarin Form Mobile client App 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 1. Master detail page navigation
 2. Communication to Web api which are hosted on Azure cloud.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

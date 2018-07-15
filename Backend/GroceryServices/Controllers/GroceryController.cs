@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace GroceryServices.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Produces("application/json")]
     [Route("api/Grocery")]
     public class GroceryController : Controller
